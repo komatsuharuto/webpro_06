@@ -23,6 +23,11 @@ app.get("/luck", (req, res) => {
   let luck = '';
   if( num==1 ) luck = '大吉';
   else if( num==2 ) luck = '中吉';
+  else if ( num==3 ) luck = '吉';
+  else if( num==4 ) luck = '小吉';
+  else if( num==5 ) luck = '末吉';
+  else if( num==6 ) luck = '大凶';
+
   console.log( 'あなたの運勢は' + luck + 'です' );
   res.render( 'luck', {number:num, luck:luck} );
 });
@@ -37,10 +42,10 @@ app.get("/janken", (req, res) => {
   if( num==1 ) cpu = 'グー';
   else if( num==2 ) cpu = 'チョキ';
   else cpu = 'パー';
-  // ここに勝敗の判定を入れる
+
   let judgement = '';
   if (hand == cpu) {
-    judgement = 'あいこ'; // 引き分け
+    judgement = 'あいこ'; 
   } else if (
     (hand === 'グー' && cpu === 'チョキ') ||
     (hand === 'チョキ' && cpu === 'パー') ||
@@ -62,5 +67,82 @@ app.get("/janken", (req, res) => {
   }
   res.render( 'janken', display );
 });
+
+
+
+
+
+
+app.get('/kazuate', (req, res) => {
+  let guess = Number(req.query.guess); 
+  let win = Number(req.query.win) || 0; 
+  let total = Number(req.query.total) || 0; 
+  const number = Math.floor(Math.random() * 10) + 1; 
+
+  
+  if (!guess) {
+    return res.render('kazuate', { win, total, message: null });
+  }
+
+  
+  let message = '';
+  if (guess === number) {
+    message = '正解です！';
+    win += 1;
+  } else {
+    message = `残念！正解は ${number} でした。`;
+  }
+
+  total += 1;
+
+  const display = {
+    win: win,
+    total: total,
+    message: message
+  };
+
+  res.render('kazuate', display);
+});
+
+app.get("/keisan", (req, res) => {
+  let num1 = Number(req.query.num1); 
+  let num2 = Number(req.query.num2); 
+  let operator = req.query.operator; 
+
+  console.log({ num1, num2, operator }); 
+
+  let result = ""; 
+
+  
+  if (operator === "+") {
+    result = num1 + num2;
+  } else if (operator === "-") {
+    result = num1 - num2;
+  } else if (operator === "*") {
+    result = num1 * num2;
+  } else if (operator === "/") {
+    if (num2 !== 0) {
+      result = num1 / num2;
+    } else {
+      result = "エラー: 0で割ることはできません";
+    }
+  } else {
+    result = "エラー: 無効な演算子";
+  }
+
+  
+  const display = {
+    num1: num1,
+    num2: num2,
+    operator: operator,
+    result: result,
+  };
+
+  res.render("keisan", display); 
+});
+
+
+
+
 
 app.listen(8080, () => console.log("Example app listening on port 8080!"));
