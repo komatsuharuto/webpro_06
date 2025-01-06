@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>簡単な計算</title>
+</head>
+<body>
+  <h1>計算結果</h1>
+  <p>入力された数値1: <%= num1 %></p>
+  <p>入力された数値2: <%= num2 %></p>
+  <p>演算子: <%= operator %></p>
+  <p>計算結果: <%= result %></p>
+  <br>
+  <form action="/keisan" method="get">
+    <label>数値1: <input type="number" name="num1" required></label><br>
+    <label>数値2: <input type="number" name="num2" required></label><br>
+    <label>演算子:
+      <select name="operator" required>
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+      </select>
+    </label><br>
+    <button type="submit">計算</button>
+  </form>
+</body>
+</html>

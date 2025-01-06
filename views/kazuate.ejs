@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数あてゲーム</title>
+</head>
+<body>
+    <h1>数あてゲーム</h1>
+
+    <% if (message) { %>
+        <h2><%= message %></h2>
+    <% } %>
+
+    <form action="/kazuate" method="GET">
+        <p>1～10の数字を入力してください:</p>
+        <input type="number" name="guess" min="1" max="10" required>
+        <input type="hidden" name="win" value="<%= win %>">
+        <input type="hidden" name="total" value="<%= total %>">
+        <button type="submit">送信</button>
+    </form>
+
+    <p>勝ち数: <%= win %> / 試行回数: <%= total %></p>
+
+    <br>
+    <a href="/kazuate">リセット</a>
+</body>
+</html>
